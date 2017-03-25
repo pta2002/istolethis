@@ -37,7 +37,7 @@ def play(request, id):
 
     if game != game.game.get_latest():
         return redirect('istole:play',
-                        kwargs={'id': game.game.get_latest().id})
+                        id=game.game.get_latest().id)
 
     if game.game.is_over():
         messages.warning(request, "Game is over!")
