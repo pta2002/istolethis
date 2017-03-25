@@ -34,7 +34,6 @@ def new(request):
 
 def play(request, id):
     game = get_object_or_404(GameText, id=id)
-    game = game.game.get_latest()
 
     if game.game.is_over():
         messages.warning(request, "Game is over!")
