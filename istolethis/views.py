@@ -8,7 +8,7 @@ from django.db.models import Count, F, Q
 
 def home(request):
     games = Game.objects.annotate(children=Count('gametext'))\
-                .filter(Q(children__lt=F('until')) | Q(children__lte=0),
+                .filter(Q(children__lt=F('until')) | Q(until__lte=0),
                         over=False)
     return render(request, 'istole/home.html', {'games': games})
 
