@@ -1,0 +1,17 @@
+{% extends "istole/base.html" %}
+{% block title %}{{ game.title }}{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'istole:play' game.id %}">
+    <h1>{{ game.title }} - Submit text</h1>
+    <p>Write this text, in your own words:</p>
+    <p><em>{{ game.get_latest.text|linebreaks }}</em></p>
+    {% load bootstrap_tags %}
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <div class="form-actions">
+        <a href="{% url 'istole:home' %}" class="btn">Cancel</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}

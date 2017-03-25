@@ -1,0 +1,42 @@
+{% extends "istole/base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<header>
+    <div class="jumbotron">
+        <h1>I stole this</h1>
+        <p class="lead">A game about copying</p>
+        <hr>
+        <a href="{% url 'istole:new' %}" class="btn btn-lg btn-primary">New game</a>
+        <a href="#more" class="btn btn-lg btn-info">Learn more</a>
+    </div>
+</header>
+<section id="more">
+    <h2>How it works</h2>
+    <p>
+        When you create a game, you are asked to write something - anything.
+        People then will see your game on the 'browse games' list. They will be
+        shown your text, and asked to write it in other words. Then, their text
+        will be shown on the game list, and it will continue like this until the
+        limit you set is reached (or until you decide to end the game)
+        You will also receive a link from where you can monitor your game.
+    </p>
+</section>
+<section id="browse">
+    <h2>Browse games</h2>
+    {% if not games %}
+        <p>There are no active games. Why not <a href="{% url 'istole:new' %}">start your own</a>?</p>
+    {% endif %}
+    <div class="games row">
+        {% for game in games %}
+        <div class="card game col-sm-3">
+            <div class="card-block">
+                <h4 class="card-title">{{ game.title }}</h4>
+                <p class="card-text"><em>{{ game.get_latest.text|linebreaks }}</em></p>
+                <a href="{% url 'istole:play' game.get_latest.id %}" class="btn btn-primary">Play this</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

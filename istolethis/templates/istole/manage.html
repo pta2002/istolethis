@@ -1,0 +1,21 @@
+{% extends "istole/base.html" %}
+{% block title %}Manage {{ game.title }}{% endblock %}
+
+{% block content %}
+<section>
+    <h1>{{ game.title }} - Manage</h1>
+    <p>Here you can view all the texts submitted to your game, and stop the game if you want to. Please keep this URL!</p>
+    {% if not game.is_over %}
+    <p><a href="{% url 'istole:stop' game.game_id %}" class="btn btn-danger">Stop game</a></p>
+    {% endif %}
+</section>
+<section>
+    <h2>Texts</h2>
+    <p>Here are all the texts your players submitted!</p>
+    <ul>
+        {% for text in texts %}
+        <li><p><em>{{text.text|linebreaks}}</em></p></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
