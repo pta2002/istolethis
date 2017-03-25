@@ -35,6 +35,10 @@ def new(request):
 def play(request, id):
     game = get_object_or_404(GameText, id=id)
 
+    if game != game.game.get_latest():
+        return redirect('istole:play',
+                        kwargs={'id': game.game.get_latest().id})
+
     if game.game.is_over():
         messages.warning(request, "Game is over!")
         return redirect(reverse('istole:home'))
@@ -43,6 +47,7 @@ def play(request, id):
         form = forms.PostTextForm(request.POST)
 
         if form.is_valid():
+            print(game.game)
             text = GameText(game=game.game, text=form.data['text'])
             text.save()
 
